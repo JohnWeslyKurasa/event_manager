@@ -1,9 +1,11 @@
 import { Pool } from 'pg';
 import dotenv from 'dotenv';
+import path from 'path';
 import { mockDb, MockEvent, MockUser, MockTicketTier, MockRegistration } from './mockStore';
 import { v4 as uuidv4 } from 'uuid';
 
 dotenv.config();
+dotenv.config({ path: path.resolve(process.cwd(), '../.env') });
 
 let useMock = false;
 
