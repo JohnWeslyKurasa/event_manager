@@ -37,7 +37,7 @@ export const LoginPage: React.FC = () => {
 
   const handleFillDemo = (demoEmail: string) => {
     setEmail(demoEmail);
-    setPassword('Password123!');
+    setPassword('12345678');
   };
 
   return (
@@ -151,6 +151,7 @@ export const LoginPage: React.FC = () => {
               <p className="text-[10px] text-botanical-500 truncate">attendee@eventpulse.com</p>
             </button>
           </div>
+          <p className="text-[10px] text-botanical-500 mt-2">Both demo accounts use password: 12345678</p>
         </div>
       </div>
     </div>

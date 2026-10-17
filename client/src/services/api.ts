@@ -1,6 +1,6 @@
 import { ApiResponse, Event, Registration, AiEventBlueprint, EventAnalytics } from '../types';
 
-const API_BASE = '/api';
+const API_BASE = `${(import.meta.env.VITE_API_URL || '').replace(/\/$/, '')}/api`;
 
 const getAuthHeaders = (): Record<string, string> => {
   const token = localStorage.getItem('eventpulse_token');
@@ -128,7 +128,21 @@ export const eventsApi = {
     const res = await fetch(`${API_BASE}/events/organizer/mine`, {
       headers: { ...getAuthHeaders() },
     });
-    return handleResponse<Event[]>(res);
+    const response = await handleResponse<Array<Event & Record<string, any>>>(res);
+    if (response.data) {
+      response.data = response.data.map((event) => ({
+        ...event,
+        organizerId: event.organizerId || event.organizer_id,
+        bannerImageUrl: event.bannerImageUrl || event.banner_image_url,
+        startDate: event.startDate || event.start_date,
+        endDate: event.endDate || event.end_date,
+        totalCapacity: Number(event.totalCapacity ?? event.total_capacity),
+        ticketsSold: Number(event.ticketsSold ?? event.tickets_sold),
+        totalRegistrations: Number(event.totalRegistrations ?? event.total_registrations),
+        totalRevenue: Number(event.totalRevenue ?? event.total_revenue),
+      } as Event));
+    }
+    return response as ApiResponse<Event[]>;
   },
 
   getEventAttendees: async (eventId: string) => {

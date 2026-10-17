@@ -75,7 +75,7 @@ class MockDatabase {
   }
 
   private seed() {
-    const passwordHash = bcrypt.hashSync('Password123!', 10);
+    const passwordHash = bcrypt.hashSync('12345678', 10);
 
     const organizerId = '11111111-1111-1111-1111-111111111111';
     const attendeeId = '22222222-2222-2222-2222-222222222222';
